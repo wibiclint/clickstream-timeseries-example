@@ -1,0 +1,58 @@
+@namespace("org.kiji.click")
+/** Example avro protocol. */
+protocol MyRecords {
+
+  /** Store a postal address. */
+  record PostalAddress {
+    string street1;
+    string street2;
+    string apt;
+    string city;
+    string state;
+    int zip;
+  }
+
+  /** Keep track of credit card information. */
+  record CardInfo {
+    string name;
+    long number;
+    int exp_month;
+    int exp_year;
+    PostalAddress billing_address;
+  }
+
+  /** Never-changing user attributes. */
+  record UserAttributes {
+    string user_name;
+    string date_of_birth;
+    PostalAddress address;
+    // Map nicknames for credit cards to card info.
+    map<CardInfo> card_info;
+  }
+
+  /** Keep track of purchase data. */
+  record ItemPurchase {
+    string item_name;
+    long item_id;
+    double purchase_amount;
+    long transaction_id;
+    // Don't need to store a timestamp explicitly here because it is present in
+    // the Kiji data model as the cell timestamp.
+  }
+
+  /** Keep track of page views. */
+  record PageView {
+    string url;
+    // Don't need to store a timestamp explicitly here because it is present in
+    // the Kiji data model as the cell timestamp.
+    string device_type;
+    string browser_id;
+  }
+
+  /** Keep track of searches a user has performed on the site. */
+  record Search {
+    string query;
+    // Don't need to store a timestamp explicitly here because it is present in
+    // the Kiji data model as the cell timestamp.
+  }
+}
